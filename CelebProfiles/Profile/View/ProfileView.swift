@@ -41,47 +41,42 @@ struct ProfileView: View {
                     VStack {
                         Spacer()
                             .frame(height: 700)
-                        VStack(alignment: .leading) {
-                            ProfileHeadingView(
-                                title: "Links", showHideButton: true,
-                                hideSectionTapped: viewModel.hideLinksTapped,
-                                editSectionTapped: viewModel.editLinksTapped)
-                            ProfileLinksSectionView(
-                                socialLinks: viewModel.profile?.links ?? [])
-                            ProfileHeadingView(
-                                title: "Bio", showHideButton: true,
-                                hideSectionTapped: {},
-                                editSectionTapped: {})
-                            Text(viewModel.profile?.bio ?? "")
-                                .font(DesignTokens.Typography.bodyFont)
-                                .foregroundStyle(DesignTokens.Colors.white)
-                                .padding(.bottom, 24)
-                            ProfileHeadingView(
-                                title: "Details", showHideButton: false,
-                                hideSectionTapped: {},
-                                editSectionTapped: {})
-                            ProfileDetailsRowView(
-                                title:
-                                    "Works at \(viewModel.profile?.workCompany ?? "")",
-                                subtitle: viewModel.profile?.workTitle ?? "",
-                                icon: "briefcase.fill")
-                            ProfileDetailsRowView(
-                                title:
-                                    "Studied at \(viewModel.profile?.educationInstitution ?? "")",
-                                subtitle: viewModel.profile?.educationField
-                                    ?? "",
-                                icon: "graduationcap.fill")
-                            ProfileDetailsRowView(
-                                title: viewModel.profile?.ethnicity ?? "",
-                                subtitle: "",
-                                icon: "shareplay")
-                            ProfileDetailsRowView(
-                                title: viewModel.profile?.relationshipStatus
-                                    ?? "",
-                                subtitle: "",
-                                icon: "heart.fill")
-                            createUserCreationRow()
-                            Spacer(minLength: 300)
+                        VStack(alignment: .leading, spacing: 24) {
+                            ProfileTitleView(
+                                name:
+                                    "\(viewModel.profile?.forename ?? "") \(viewModel.profile?.surname ?? "")",
+                                work: viewModel.profile?.work ?? "")
+                            ProfileDetailRowView(
+                                image: "birthday.cake",
+                                heading: "Birthday",
+                                content: viewModel.profile?.birthday ?? "")
+                            ProfileDetailRowView(
+                                image: "bubbles.and.sparkles",
+                                heading: "Birth Sign",
+                                content: viewModel.profile?.birthSign ?? "")
+                            ProfileDetailRowView(
+                                image: "location.circle",
+                                heading: "Birthplace",
+                                content: viewModel.profile?.birthplace ?? "")
+                            ProfileDetailRowView(
+                                image: "lungs.fill",
+                                heading: "Age",
+                                content: "21 years old"
+                            )
+                            .padding(.bottom, 12)
+                            ProfileSectionView(
+                                heading: "Biography",
+                                content: viewModel.profile?.about ?? "")
+                            ProfileSectionView(
+                                heading: "Before Fame",
+                                content: viewModel.profile?.beforeFame ?? "")
+                            ProfileSectionView(
+                                heading: "Trivia",
+                                content: viewModel.profile?.trivia ?? "")
+                            ProfileSectionView(
+                                heading: "Family Life",
+                                content: viewModel.profile?.familyLife ?? "")
+                            Spacer(minLength: 700)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .safeAreaPadding()
@@ -105,8 +100,8 @@ struct ProfileView: View {
                 if scrollPosition.y < -520 {
                     VStack {
                         Rectangle()
+                            .fill(DesignTokens.Colors.black)
                             .frame(height: 180)
-                            .background(.black)
                         Spacer()
                     }
                 }
@@ -127,54 +122,24 @@ struct ProfileView: View {
     }
 }
 
-@ViewBuilder
-func createUserCreationRow() -> some View {
-    HStack(spacing: 24) {
-        Image(systemName: "clock")
-            .foregroundStyle(DesignTokens.Colors.white)
-            .frame(width: 20, alignment: .center)
-        Text("Joined on February 2024")
-            .font(DesignTokens.Typography.bodyFont)
-            .foregroundStyle(DesignTokens.Colors.secondary)
-        Spacer()
-    }
-    .padding(.bottom, 24)
-}
-
 #Preview {
     ProfileView(
         viewModel: ProfileViewModel(
             profile: Profile(
-                bio:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                bornLocation: "England",
-                educationField: "NA",
-                educationInstitution: "NA",
-                ethnicity: "Mixed",
-                homeLocation: "Madrid",
-                links: [
-                    SocialLink(
-                        name: .playstation,
-                        linkURL:
-                            "https://psntrophyleaders.com/user/view/saifshikdar#games"
-                    ),
-                    SocialLink(
-                        name: .instagram,
-                        linkURL:
-                            "https://www.instagram.com/judebellingham/?hl=en"),
-
-                ],
+                about:
+                    "Midfielder who joined Borussia Dortmund after playing for Birmingham City from 2010 to 2019. In 2023, he joined club Real Madrid. He has also played for the English national team.",
                 profilePictureURL:
                     "https://www.fifatrainingcentre.com/media/images/game/World-class-bellingham.variant1920x1080.jpg",
-                publicFields: PublicFields(
-                    bio: true,
-                    education: true,
-                    ethnicity: true,
-                    home: true,
-                    links: true,
-                    relationship: true,
-                    work: true),
-                relationshipStatus: "Single",
-                workCompany: "Real Madrid",
-                workTitle: "Football Player")))
+                work: "Football Player",
+                beforeFame: "He began playing for Birmingham City at age 14.",
+                birthSign: "Cancer",
+                birthday: "2003-06-29",
+                birthplace: "gb",
+                familyLife:
+                    "His brother Jobe also plays soccer. In 2025 he was seen out with model Ashlyn Castro.",
+                forename: "Jude",
+                surname: "Bellingham",
+                trivia:
+                    "In his first game with Borussia Dortmund, he became their youngest goalscorer ever."
+            )))
 }

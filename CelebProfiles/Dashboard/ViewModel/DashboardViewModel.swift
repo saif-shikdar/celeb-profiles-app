@@ -10,6 +10,8 @@ import Foundation
 class DashboardViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
+    @Published var actors: [Profile]?
+    
     @Published var showErrorMessage: Bool = false
     @Published var errorMessage: String?
     
@@ -24,16 +26,25 @@ class DashboardViewModel: ObservableObject {
         self.profileService = profileService
     }
     
-    func fetchData() {
-//        profileService.fe(userID: userID) { result in
-//            switch result {
-//            case .success(let user):
-//                self.user = user
-//            case .failure(let error):
-//                self.errorMessage = error.localizedDescription
-//                self.showErrorMessage = true;
-//            }
-//        }
+    func fetchData() async {
+        await profileService.fetchProfiles { result in
+            Task {
+                await MainActor.run {
+                    switch result {
+                    case .success(let profiles):
+                        self.actors = profiles
+                    case .failure(let error):
+                        self.errorMessage = error.localizedDescription
+                        self.showErrorMessage = true
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    func onCelebCardTapped(profile: Profile) {
+        coordinator?.pushPage(.profile(profile))
     }
 }
 

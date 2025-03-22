@@ -9,20 +9,35 @@ import SwiftUI
 import SwiftUICore
 
 struct DashboardView: View {
+    @StateObject var viewModel: DashboardViewModel
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 10) {
-                Text("Hello Dashboard!")
-                    .font(DesignTokens.Typography.titleFont)
-                    .foregroundStyle(DesignTokens.Colors.primary)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Actors")
+                        .font(DesignTokens.Typography.titleFont)
+                        .foregroundStyle(DesignTokens.Colors.primary)
+                    CardListView(celebrities: viewModel.actors ?? [],
+                                 onCardTapped: { celeb in
+                        viewModel.onCelebCardTapped(profile: celeb)
+                    })
+                }
+                .task {
+                    await viewModel.fetchData()
+                }
+                .alert("Error", isPresented: $viewModel.showErrorMessage) {
+                    
+                } message: {
+                    Text(viewModel.errorMessage ?? "Unknown Error")
+                }
             }
             .safeAreaPadding()
+            .clipped()
         }
-
     }
 }
 
 #Preview {
-    DashboardView()
+    DashboardView(viewModel: DashboardViewModel(coordinator: nil))
 }

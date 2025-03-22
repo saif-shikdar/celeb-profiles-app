@@ -11,8 +11,22 @@ import FirebaseFirestore
 class ProfileService {
     let db = Firestore.firestore()
     
-    func fetchProfiles(completion: @escaping (Result<Profile?, Error>) -> Void
-    ) {
-        let docRef = db.collection("profiles")
+    func fetchProfiles(completion: @escaping (Result<[Profile], Error>) -> Void
+    ) async {
+        var profiles: [Profile] = []
+        do {
+            let querySnapshot = try await db.collection("profiles").getDocuments()
+            for document in querySnapshot.documents {
+                do {
+                    let profile = try document.data(as: Profile.self)
+                    profiles.append(profile)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            completion(.success(profiles))
+        } catch {
+            completion(.failure(CustomError.noData))
+        }
     }
 }

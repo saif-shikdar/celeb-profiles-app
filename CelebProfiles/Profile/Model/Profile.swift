@@ -6,31 +6,29 @@
 //
 
 struct Profile: Hashable, Codable {
-    let bio: String
-    let bornLocation: String
-    let educationField: String
-    let educationInstitution: String
-    let ethnicity: String
-    let homeLocation: String
-    let links: [SocialLink]
+    let about: String
     let profilePictureURL: String
-    let publicFields: PublicFields
-    let relationshipStatus: String
-    let workCompany: String
-    let workTitle: String
+    let work: String
+    let beforeFame: String
+    let birthSign: String
+    let birthday: String
+    let birthplace: String
+    let familyLife: String
+    let forename: String
+    let surname: String
+    let trivia: String
     
     enum CodingKeys: String, CodingKey {
-        case bio
-        case bornLocation = "born_location"
-        case educationField = "education_field"
-        case educationInstitution = "education_institution"
-        case ethnicity = "ethnicity"
-        case homeLocation = "home_location"
-        case links
+        case about
         case profilePictureURL = "profile_picture_url"
-        case publicFields = "public_fields"
-        case relationshipStatus = "relationship_status"
-        case workCompany = "work_company"
-        case workTitle = "work_title"
+        case work
+        case beforeFame = "before_fame"
+        case birthSign = "birth_sign"
+        case birthday
+        case birthplace
+        case familyLife = "family_life"
+        case forename
+        case surname
+        case trivia
     }
 }

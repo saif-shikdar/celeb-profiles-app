@@ -20,13 +20,4 @@ class ProfileViewModel: ObservableObject {
         self.sessionStorage = sessionStorage
         self.profile = profile
     }
-    
-    func hideLinksTapped() {
-        print("Hide Links Tapped!")
-        print(profile?.links.first?.name.rawValue ?? "Unknown")
-    }
-    
-    func editLinksTapped() {
-        print("Edit Links Tapped!")
-    }
 }

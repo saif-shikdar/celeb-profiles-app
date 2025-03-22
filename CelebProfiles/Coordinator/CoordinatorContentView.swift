@@ -21,13 +21,19 @@ struct CoordinatorContentView: View {
                     case .root:
                         createTabView()
                     case .profile(let profile):
-                        ProfileView(viewModel: ProfileViewModel(profile: profile))
+                        ProfileView(
+                            viewModel: ProfileViewModel(
+                                profile: profile))
                     case .signUp:
-                        LoginView(viewModel: LoginViewModel(coordinator: coordinator))
+                        LoginView(
+                            viewModel: LoginViewModel(
+                                coordinator: coordinator))
                     }
                 }
             } else {
-                LoginView(viewModel: LoginViewModel(coordinator: coordinator))
+                LoginView(
+                    viewModel: LoginViewModel(
+                        coordinator: coordinator))
             }
         }
     }
@@ -35,7 +41,9 @@ struct CoordinatorContentView: View {
     @ViewBuilder
     func createTabView() -> some View {
         TabView {
-            DashboardView()
+            DashboardView(
+                viewModel: DashboardViewModel(
+                    coordinator: coordinator))
             .tabItem {
                 Label("Dashboard", systemImage: "house.fill")
             }
