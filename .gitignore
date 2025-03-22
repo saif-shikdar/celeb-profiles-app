@@ -4,7 +4,6 @@
 
 ## User settings
 xcuserdata/
-**/CelebProfiles/GoogleService-Info.plist
 
 ## Obj-C/Swift specific
 *.hmap
