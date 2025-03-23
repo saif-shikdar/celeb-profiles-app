@@ -23,11 +23,14 @@ struct CoordinatorContentView: View {
                     case .profile(let profile):
                         ProfileView(
                             viewModel: ProfileViewModel(
+                                coordinator: coordinator,
                                 profile: profile))
                     case .signUp:
                         LoginView(
                             viewModel: LoginViewModel(
                                 coordinator: coordinator))
+                    case .birthSign(let birthSign):
+                        ProfileBirthSignView(birthSign: birthSign)
                     }
                 }
             } else {

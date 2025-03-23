@@ -13,11 +13,24 @@ class ProfileViewModel: ObservableObject {
     @Published var showErrorMessage: Bool = false
     @Published var errorMessage: String?
     
+    var coordinator: Coordinator?
     let sessionStorage: SessionStorage
     
     init(sessionStorage: SessionStorage = SessionStorage(),
+         coordinator: Coordinator?,
          profile: Profile? = nil) {
         self.sessionStorage = sessionStorage
+        self.coordinator = coordinator
         self.profile = profile
+    }
+    
+    func onBirthSignInfoTapped() {
+        navigateToPage(.birthSign(profile?.birthSign ?? .aries))
+    }
+}
+
+extension ProfileViewModel: ProfileViewModelProtocol {
+    func navigateToPage(_ page: Coordinator.Page) {
+        coordinator?.pushPage(page)
     }
 }

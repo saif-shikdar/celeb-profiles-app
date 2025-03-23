@@ -12,6 +12,13 @@ struct ProfileView: View {
     @ObservedObject var viewModel: ProfileViewModel
     @State private var scrollPosition: CGPoint = .zero
     @Environment(\.dismiss) var dismiss
+    @State private var showBirthPlaceSheet = false
+
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        return formatter
+    }()
 
     var body: some View {
         NavigationView {
@@ -49,19 +56,34 @@ struct ProfileView: View {
                             ProfileDetailRowView(
                                 image: "birthday.cake",
                                 heading: "Birthday",
-                                content: viewModel.profile?.birthday ?? "")
-                            ProfileDetailRowView(
-                                image: "bubbles.and.sparkles",
-                                heading: "Birth Sign",
-                                content: viewModel.profile?.birthSign ?? "")
-                            ProfileDetailRowView(
-                                image: "location.circle",
-                                heading: "Birthplace",
-                                content: viewModel.profile?.birthplace ?? "")
+                                content: dateFormatter.string(from: viewModel.profile?.birthday ?? Date.now))
+                            Button {
+                                viewModel.onBirthSignInfoTapped()
+                            } label: {
+                                ProfileDetailRowView(
+                                    image: "bubbles.and.sparkles",
+                                    heading: "Birth Sign",
+                                    content: viewModel.profile?.birthSign.name
+                                        ?? "")
+                            }
+                            Button {
+                                showBirthPlaceSheet.toggle()
+                            } label: {
+                                ProfileDetailRowView(
+                                    image: "location.circle",
+                                    heading: "Birthplace",
+                                    content: viewModel.profile?.birthplace ?? ""
+                                )
+                            }
+                            .sheet(isPresented: $showBirthPlaceSheet) {
+                                ProfileBirthPlaceMapView()
+                                    .presentationDetents([.medium])
+                                    .presentationDragIndicator(.hidden)
+                            }
                             ProfileDetailRowView(
                                 image: "lungs.fill",
                                 heading: "Age",
-                                content: "21 years old"
+                                content: "\(AgeCalculator.calculateAge(from: viewModel.profile?.birthday ?? Date())) Years Old"
                             )
                             .padding(.bottom, 12)
                             ProfileSectionView(
@@ -125,6 +147,7 @@ struct ProfileView: View {
 #Preview {
     ProfileView(
         viewModel: ProfileViewModel(
+            coordinator: nil,
             profile: Profile(
                 about:
                     "Midfielder who joined Borussia Dortmund after playing for Birmingham City from 2010 to 2019. In 2023, he joined club Real Madrid. He has also played for the English national team.",
@@ -132,8 +155,8 @@ struct ProfileView: View {
                     "https://www.fifatrainingcentre.com/media/images/game/World-class-bellingham.variant1920x1080.jpg",
                 work: "Football Player",
                 beforeFame: "He began playing for Birmingham City at age 14.",
-                birthSign: "Cancer",
-                birthday: "2003-06-29",
+                birthSign: .aries,
+                birthday: Date.now,
                 birthplace: "gb",
                 familyLife:
                     "His brother Jobe also plays soccer. In 2025 he was seen out with model Ashlyn Castro.",

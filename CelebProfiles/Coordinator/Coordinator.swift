@@ -29,6 +29,7 @@ class Coordinator: ObservableObject {
         case root
         case signUp
         case profile(Profile)
+        case birthSign(BirthSign)
     }
 }
 
@@ -38,5 +39,9 @@ protocol DashboardViewModelProtocol {
 }
 
 protocol LoginViewModelProtocol {
+    func navigateToPage(_ page: Coordinator.Page)
+}
+
+protocol ProfileViewModelProtocol {
     func navigateToPage(_ page: Coordinator.Page)
 }
