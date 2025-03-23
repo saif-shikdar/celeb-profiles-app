@@ -5,6 +5,7 @@
 //  Created by Saif Shikdar on 21/03/2025.
 //
 
+import MapKit
 import SwiftUI
 import SwiftUICore
 
@@ -56,7 +57,9 @@ struct ProfileView: View {
                             ProfileDetailRowView(
                                 image: "birthday.cake",
                                 heading: "Birthday",
-                                content: dateFormatter.string(from: viewModel.profile?.birthday ?? Date.now))
+                                content: dateFormatter.string(
+                                    from: viewModel.profile?.birthday
+                                        ?? Date.now))
                             Button {
                                 viewModel.onBirthSignInfoTapped()
                             } label: {
@@ -76,14 +79,18 @@ struct ProfileView: View {
                                 )
                             }
                             .sheet(isPresented: $showBirthPlaceSheet) {
-                                ProfileBirthPlaceMapView()
-                                    .presentationDetents([.medium])
-                                    .presentationDragIndicator(.hidden)
+                                ProfileBirthPlaceMapView(
+                                    location: CLLocationCoordinate2D(
+                                        latitude: 23.6850, longitude: 90.3563)
+                                )
+                                .presentationDetents([.medium])
+                                .presentationDragIndicator(.hidden)
                             }
                             ProfileDetailRowView(
                                 image: "lungs.fill",
                                 heading: "Age",
-                                content: "\(AgeCalculator.calculateAge(from: viewModel.profile?.birthday ?? Date())) Years Old"
+                                content:
+                                    "\(AgeCalculator.calculateAge(from: viewModel.profile?.birthday ?? Date())) Years Old"
                             )
                             .padding(.bottom, 12)
                             ProfileSectionView(
