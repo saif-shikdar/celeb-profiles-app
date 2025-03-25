@@ -14,14 +14,28 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Actors")
-                        .font(DesignTokens.Typography.titleFont)
-                        .foregroundStyle(DesignTokens.Colors.primary)
-                    CardListView(celebrities: viewModel.actors ?? [],
-                                 onCardTapped: { celeb in
-                        viewModel.onCelebCardTapped(profile: celeb)
-                    })
+                VStack {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Actors")
+                            .font(DesignTokens.Typography.titleFont)
+                            .foregroundStyle(DesignTokens.Colors.primary)
+                        CardListView(celebrities: viewModel.actors ?? [],
+                                     onCardTapped: { celeb in
+                            viewModel.onCelebCardTapped(profile: celeb)
+                        })
+                    }
+                    .frame(height: 150, alignment: .top)
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Actresses")
+                            .font(DesignTokens.Typography.titleFont)
+                            .foregroundStyle(DesignTokens.Colors.primary)
+                        CardListView(celebrities: viewModel.actresses ?? [],
+                                     onCardTapped: { celeb in
+                            viewModel.onCelebCardTapped(profile: celeb)
+                        })
+                    }
+                    .frame(height: 150, alignment: .top)
+                    Spacer()
                 }
                 .task {
                     await viewModel.fetchData()

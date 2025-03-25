@@ -53,7 +53,7 @@ struct ProfileView: View {
                             ProfileTitleView(
                                 name:
                                     "\(viewModel.profile?.forename ?? "") \(viewModel.profile?.surname ?? "")",
-                                work: viewModel.profile?.work ?? "")
+                                work: viewModel.profile?.work.name ?? "")
                             ProfileDetailRowView(
                                 image: "birthday.cake",
                                 heading: "Birthday",
@@ -159,7 +159,7 @@ struct ProfileView: View {
                     "Midfielder who joined Borussia Dortmund after playing for Birmingham City from 2010 to 2019. In 2023, he joined club Real Madrid. He has also played for the English national team.",
                 profilePictureURL:
                     "https://www.fifatrainingcentre.com/media/images/game/World-class-bellingham.variant1920x1080.jpg",
-                work: "Football Player",
+                work: .footballPlayer,
                 beforeFame: "He began playing for Birmingham City at age 14.",
                 birthSign: .gemini,
                 birthday: Date(timeIntervalSince1970: 1056898266),

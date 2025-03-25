@@ -11,6 +11,7 @@ class DashboardViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
     @Published var actors: [Profile]?
+    @Published var actresses: [Profile]?
     
     @Published var showErrorMessage: Bool = false
     @Published var errorMessage: String?
@@ -32,7 +33,8 @@ class DashboardViewModel: ObservableObject {
                 await MainActor.run {
                     switch result {
                     case .success(let profiles):
-                        self.actors = profiles
+                        self.actors = profiles.filter { $0.work == .actor }
+                        self.actresses = profiles.filter { $0.work == .actress }
                     case .failure(let error):
                         self.errorMessage = error.localizedDescription
                         self.showErrorMessage = true

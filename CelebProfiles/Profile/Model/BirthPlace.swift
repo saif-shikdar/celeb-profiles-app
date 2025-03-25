@@ -2369,7 +2369,7 @@ enum BirthPlace: String, Codable {
         case .unitedStates:
             return MKCoordinateRegion(
                 center: CLLocationCoordinate2D(latitude: 37.0902, longitude: -95.7129),
-                span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
+                span: MKCoordinateSpan(latitudeDelta: 20.0, longitudeDelta: 20.0)
             )
         case .uruguay:
             return MKCoordinateRegion(

@@ -10,7 +10,7 @@ import Foundation
 struct Profile: Hashable, Codable {
     let about: String
     let profilePictureURL: String
-    let work: String
+    let work: Work
     let beforeFame: String
     let birthSign: BirthSign
     let birthday: Date
@@ -35,7 +35,7 @@ struct Profile: Hashable, Codable {
     }
 
     init(
-        about: String, profilePictureURL: String, work: String,
+        about: String, profilePictureURL: String, work: Work,
         beforeFame: String, birthSign: BirthSign, birthday: Date,
         birthplace: BirthPlace, familyLife: String, forename: String,
         surname: String, trivia: String
@@ -58,7 +58,8 @@ struct Profile: Hashable, Codable {
         self.about = try container.decode(String.self, forKey: .about)
         self.profilePictureURL = try container.decode(
             String.self, forKey: .profilePictureURL)
-        self.work = try container.decode(String.self, forKey: .work)
+        self.work = try container.decode(
+            Work.self, forKey: .work)
         self.beforeFame = try container.decode(String.self, forKey: .beforeFame)
         self.birthSign = try container.decode(
             BirthSign.self, forKey: .birthSign)
