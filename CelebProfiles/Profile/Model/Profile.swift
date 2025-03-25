@@ -14,7 +14,7 @@ struct Profile: Hashable, Codable {
     let beforeFame: String
     let birthSign: BirthSign
     let birthday: Date
-    let birthplace: String
+    let birthplace: BirthPlace
     let familyLife: String
     let forename: String
     let surname: String
@@ -37,7 +37,7 @@ struct Profile: Hashable, Codable {
     init(
         about: String, profilePictureURL: String, work: String,
         beforeFame: String, birthSign: BirthSign, birthday: Date,
-        birthplace: String, familyLife: String, forename: String,
+        birthplace: BirthPlace, familyLife: String, forename: String,
         surname: String, trivia: String
     ) {
         self.about = about
@@ -75,8 +75,9 @@ struct Profile: Hashable, Codable {
                 debugDescription:
                     "Date string does not match format expected by formatter.")
         }
-
-        self.birthplace = try container.decode(String.self, forKey: .birthplace)
+        
+        self.birthplace = try container.decode(
+            BirthPlace.self, forKey: .birthplace)
         self.familyLife = try container.decode(String.self, forKey: .familyLife)
         self.forename = try container.decode(String.self, forKey: .forename)
         self.surname = try container.decode(String.self, forKey: .surname)

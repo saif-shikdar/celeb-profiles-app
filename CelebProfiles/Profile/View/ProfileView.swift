@@ -75,13 +75,12 @@ struct ProfileView: View {
                                 ProfileDetailRowView(
                                     image: "location.circle",
                                     heading: "Birthplace",
-                                    content: viewModel.profile?.birthplace ?? ""
+                                    content: viewModel.profile?.birthplace.name ?? BirthPlace.greatBritain.name
                                 )
                             }
                             .sheet(isPresented: $showBirthPlaceSheet) {
                                 ProfileBirthPlaceMapView(
-                                    location: CLLocationCoordinate2D(
-                                        latitude: 23.6850, longitude: 90.3563)
+                                    birthPlace: viewModel.profile?.birthplace ?? BirthPlace.greatBritain
                                 )
                                 .presentationDetents([.medium])
                                 .presentationDragIndicator(.hidden)
@@ -162,9 +161,9 @@ struct ProfileView: View {
                     "https://www.fifatrainingcentre.com/media/images/game/World-class-bellingham.variant1920x1080.jpg",
                 work: "Football Player",
                 beforeFame: "He began playing for Birmingham City at age 14.",
-                birthSign: .aries,
-                birthday: Date.now,
-                birthplace: "gb",
+                birthSign: .gemini,
+                birthday: Date(timeIntervalSince1970: 1056898266),
+                birthplace: .greatBritain,
                 familyLife:
                     "His brother Jobe also plays soccer. In 2025 he was seen out with model Ashlyn Castro.",
                 forename: "Jude",

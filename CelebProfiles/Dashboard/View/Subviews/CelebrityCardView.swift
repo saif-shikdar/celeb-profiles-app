@@ -59,7 +59,7 @@ struct CelebrityCardView: View {
             beforeFame: "He began playing for Birmingham City at age 14.",
             birthSign: .cancer,
             birthday: DateFormatter().date(from: "2003-06-29") ?? Date.now,
-            birthplace: "gb",
+            birthplace: .greatBritain,
             familyLife:
                 "His brother Jobe also plays soccer. In 2025 he was seen out with model Ashlyn Castro.",
             forename: "Jude",

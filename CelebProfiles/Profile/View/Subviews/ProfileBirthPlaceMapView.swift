@@ -9,13 +9,13 @@ import MapKit
 import SwiftUI
 
 struct ProfileBirthPlaceMapView: View {
-    let location: CLLocationCoordinate2D
+    let birthPlace: BirthPlace
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(initialPosition: .region(region))
-            HStack {
+            Map(initialPosition: .region(birthPlace.regionCoordinates))
+            HStack(spacing: 16) {
                 Button {
                     dismiss()
                 } label: {
@@ -23,24 +23,18 @@ struct ProfileBirthPlaceMapView: View {
                         .foregroundStyle(DesignTokens.Colors.white)
                 }
                 Spacer()
-                Text("Bangladesh")
+                Text(birthPlace.name)
                     .font(DesignTokens.Typography.titleFont)
                     .foregroundStyle(DesignTokens.Colors.white)
+                Image(birthPlace.flag)
             }
             .frame(maxWidth: .infinity)
             .background(DesignTokens.Colors.black.opacity(0.8))
             .safeAreaPadding()
         }
     }
-
-    private var region: MKCoordinateRegion {
-        MKCoordinateRegion(
-            center: location,
-            span: .init(latitudeDelta: 4, longitudeDelta: 4)
-        )
-    }
 }
 
 #Preview {
-    ProfileBirthPlaceMapView(location: .init(latitude: 23.6850, longitude: 90.3563))
+    ProfileBirthPlaceMapView(birthPlace: .bangladesh)
 }
