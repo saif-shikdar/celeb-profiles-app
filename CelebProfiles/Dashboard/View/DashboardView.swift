@@ -14,34 +14,26 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack {
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("Actors")
-                            .font(DesignTokens.Typography.titleFont)
-                            .foregroundStyle(DesignTokens.Colors.primary)
-                        CardListView(celebrities: viewModel.actors ?? [],
-                                     onCardTapped: { celeb in
+                VStack(spacing: 24) {
+                    createCardListView(
+                        heading: "Actors",
+                        celebs: viewModel.actors ?? [],
+                        onCardTapped: { celeb in
                             viewModel.onCelebCardTapped(profile: celeb)
                         })
-                    }
-                    .frame(height: 150, alignment: .top)
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("Actresses")
-                            .font(DesignTokens.Typography.titleFont)
-                            .foregroundStyle(DesignTokens.Colors.primary)
-                        CardListView(celebrities: viewModel.actresses ?? [],
-                                     onCardTapped: { celeb in
+                    createCardListView(
+                        heading: "Actresses",
+                        celebs: viewModel.actresses ?? [],
+                        onCardTapped: { celeb in
                             viewModel.onCelebCardTapped(profile: celeb)
                         })
-                    }
-                    .frame(height: 150, alignment: .top)
                     Spacer()
                 }
                 .task {
                     await viewModel.fetchData()
                 }
                 .alert("Error", isPresented: $viewModel.showErrorMessage) {
-                    
+
                 } message: {
                     Text(viewModel.errorMessage ?? "Unknown Error")
                 }
@@ -50,6 +42,23 @@ struct DashboardView: View {
             .clipped()
         }
     }
+}
+
+@ViewBuilder
+func createCardListView(
+    heading: String,
+    celebs: [Profile],
+    onCardTapped: @escaping (Profile) -> Void
+) -> some View {
+    VStack(alignment: .leading, spacing: 16) {
+        Text(heading)
+            .font(DesignTokens.Typography.titleFont)
+            .foregroundStyle(DesignTokens.Colors.primary)
+        CardListView(
+            celebrities: celebs,
+            onCardTapped: { profile in onCardTapped(profile) })
+    }
+    .frame(height: 150, alignment: .top)
 }
 
 #Preview {

@@ -13,9 +13,10 @@ struct ProfileDetailRowView: View {
     let content: String
     
     var body: some View {
-        HStack(alignment: .bottom, spacing: 24) {
+        HStack(alignment: .bottom) {
             Image(systemName: image)
                 .foregroundStyle(DesignTokens.Colors.white)
+                .padding(.trailing, 16)
             Text(heading)
                 .font(DesignTokens.Typography.bodyFont)
                 .foregroundStyle(DesignTokens.Colors.white)
@@ -23,6 +24,7 @@ struct ProfileDetailRowView: View {
             Text(content)
                 .font(DesignTokens.Typography.bodyFont)
                 .foregroundStyle(DesignTokens.Colors.white)
+                .lineLimit(1)
         }
     }
 }
@@ -30,6 +32,6 @@ struct ProfileDetailRowView: View {
 #Preview {
     ProfileDetailRowView(image: "birthday.cake",
                          heading: "Birthday",
-                         content: "June 29, 2003")
+                         content: "Sunday June 29 2003")
     .background(Color.black)
 }

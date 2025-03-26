@@ -39,11 +39,11 @@ struct CelebrityCardView: View {
                 Text("\(profile.forename) \(profile.surname)")
                     .font(DesignTokens.Typography.captionFont)
                     .foregroundStyle(DesignTokens.Colors.primary)
+                    .lineLimit(2)
+                    .frame(width: 80)
             }
             .frame(
-                width: 100,
-                height: 80,
-                alignment: .leading)
+                width: 80, height: 125, alignment: .top)
         }
     }
 }
