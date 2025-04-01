@@ -16,7 +16,8 @@ class LoginViewModel: ObservableObject {
     var coordinator: Coordinator?
     let authService: AuthenticationService
     
-    init(coordinator: Coordinator?, authService: AuthenticationService = AuthenticationService()) {
+    init(coordinator: Coordinator?,
+         authService: AuthenticationService = AuthenticationService()) {
         self.coordinator = coordinator
         self.authService = authService
     }

@@ -21,7 +21,6 @@ struct CardListView: View {
                 }
             }
         }
-        .safeAreaPadding()
         .clipped()
     }
 }

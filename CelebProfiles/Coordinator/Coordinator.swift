@@ -34,7 +34,7 @@ class Coordinator: ObservableObject {
 }
 
 // ViewModel Protocols
-protocol DashboardViewModelProtocol {
+protocol CelebritiesViewModelProtocol {
     func navigateToPage(_ page: Coordinator.Page)
 }
 

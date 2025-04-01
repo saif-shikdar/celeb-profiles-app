@@ -9,7 +9,11 @@ struct Images {
     
     // MARK: Icon
     
+    static let appIcon = "app-icon"
     static let linkIcon = "link-icon"
+    static let genderIcon = "gender-icon"
+    static let maleIcon = "male-icon"
+    static let femaleIcon = "female-icon"
     
     // MARK: Logos
     

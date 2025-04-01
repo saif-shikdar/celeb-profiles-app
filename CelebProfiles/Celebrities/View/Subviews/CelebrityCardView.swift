@@ -33,7 +33,11 @@ struct CelebrityCardView: View {
                             .cornerRadius(25)
 
                     default:
-                        EmptyView()
+                        ProgressView()
+                            .frame(
+                                width: 80,
+                                height: 80
+                            )
                     }
                 }
                 Text("\(profile.forename) \(profile.surname)")

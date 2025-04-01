@@ -19,6 +19,7 @@ struct Profile: Hashable, Codable {
     let forename: String
     let surname: String
     let trivia: String
+    let gender: Gender?
 
     enum CodingKeys: String, CodingKey {
         case about
@@ -32,13 +33,14 @@ struct Profile: Hashable, Codable {
         case forename
         case surname
         case trivia
+        case gender
     }
 
     init(
         about: String, profilePictureURL: String, work: Work,
         beforeFame: String, birthSign: BirthSign, birthday: Date,
         birthplace: BirthPlace, familyLife: String, forename: String,
-        surname: String, trivia: String
+        surname: String, trivia: String, gender: Gender? = nil
     ) {
         self.about = about
         self.profilePictureURL = profilePictureURL
@@ -51,6 +53,7 @@ struct Profile: Hashable, Codable {
         self.forename = forename
         self.surname = surname
         self.trivia = trivia
+        self.gender = gender
     }
 
     init(from decoder: any Decoder) throws {
@@ -83,5 +86,7 @@ struct Profile: Hashable, Codable {
         self.forename = try container.decode(String.self, forKey: .forename)
         self.surname = try container.decode(String.self, forKey: .surname)
         self.trivia = try container.decode(String.self, forKey: .trivia)
+        self.gender = try container.decode(
+            Gender.self, forKey: .gender)
     }
 }

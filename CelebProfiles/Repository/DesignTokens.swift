@@ -18,6 +18,7 @@ struct DesignTokens {
 
     struct Typography {
         static let titleFont = Font.system(size: 20, weight: .bold)
+        static let smallHeadingFont = Font.system(size: 16, weight: .semibold)
         static let bodyFont = Font.system(size: 16, weight: .regular)
         static let captionFont = Font.system(size: 12, weight: .light)
         static let buttonFont = Font.system(size: 18, weight: .semibold)

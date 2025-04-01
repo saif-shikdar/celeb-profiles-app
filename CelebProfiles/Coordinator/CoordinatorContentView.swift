@@ -50,6 +50,12 @@ struct CoordinatorContentView: View {
             .tabItem {
                 Label("Dashboard", systemImage: "house.fill")
             }
+            CelebritiesView(
+                viewModel: CelebritiesViewModel(
+                    coordinator: coordinator))
+            .tabItem {
+                Label("Celebrities", systemImage: "person.3.fill")
+            }
             SettingsView(
                 viewModel: SettingsViewModel(
                     coordinator: coordinator)

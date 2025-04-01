@@ -7,8 +7,8 @@
 
 enum Work: String, Codable {
     case actor
-    case actress
     case footballPlayer
+    case influencer
 
     init(from decoder: Decoder) throws {
         guard
@@ -24,10 +24,10 @@ enum Work: String, Codable {
         switch self {
         case .actor:
             return "Actor"
-        case .actress:
-            return "Actress"
         case .footballPlayer:
             return "Football Player"
+        case .influencer:
+            return "Influencer"
         }
     }
 }
