@@ -15,11 +15,7 @@ enum SessionStorageError: Swift.Error {
 protocol SessionStorageType {
     var userID: String? { get }
     
-    var userEmail: String? { get }
-    
     func storeUserID(userID: String)
-
-    func storeUserEmail(email: String)
 }
 
 class SessionStorage: SessionStorageType {
@@ -33,16 +29,8 @@ class SessionStorage: SessionStorageType {
     var userID: String? {
         return defaults.value(forKey: Constants.userIDKey) as? String
     }
-    
-    var userEmail: String? {
-        return defaults.value(forKey: Constants.emailKey) as? String
-    }
 
     func storeUserID(userID: String) {
         defaults.set(userID, forKey: Constants.userIDKey)
-    }
-
-    func storeUserEmail(email: String) {
-        defaults.set(email, forKey: Constants.emailKey)
     }
 }

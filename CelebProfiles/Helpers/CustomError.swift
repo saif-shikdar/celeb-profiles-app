@@ -10,6 +10,7 @@ import Foundation
 enum CustomError: Error {
     case unknownError
     case noData
+    case appleSignInError
 }
 
 extension CustomError: LocalizedError {
@@ -19,6 +20,8 @@ extension CustomError: LocalizedError {
             "Unknown Error Occurred"
         case .noData:
             "No Data Found"
+        case .appleSignInError:
+            "Apple Sign in currently unavailable. Please try again later"
         }
     }
 }

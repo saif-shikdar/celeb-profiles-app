@@ -12,18 +12,15 @@ import XCTest
 class ProfileViewModelTests: XCTestCase {
 
     var viewModel: ProfileViewModel!
-    var mockSessionStorage: MockSessionStorage!
     var mockCoordinator: MockCoordinator!
 
     override func setUp() {
         super.setUp()
-        mockSessionStorage = MockSessionStorage()
         mockCoordinator = MockCoordinator()
     }
 
     override func tearDown() {
         viewModel = nil
-        mockSessionStorage = nil
         mockCoordinator = nil
         super.tearDown()
     }
@@ -47,7 +44,7 @@ class ProfileViewModelTests: XCTestCase {
             trivia: "")
         // When
         viewModel = ProfileViewModel(
-            sessionStorage: mockSessionStorage, coordinator: mockCoordinator,
+            coordinator: mockCoordinator,
             profile: testProfile)
 
         // Then
@@ -59,7 +56,7 @@ class ProfileViewModelTests: XCTestCase {
     func testProfileViewModel_InitializesWithNilProfile() {
         // When
         viewModel = ProfileViewModel(
-            sessionStorage: mockSessionStorage, coordinator: mockCoordinator,
+            coordinator: mockCoordinator,
             profile: nil)
 
         // Then
@@ -84,7 +81,7 @@ class ProfileViewModelTests: XCTestCase {
             trivia: "")
 
         viewModel = ProfileViewModel(
-            sessionStorage: mockSessionStorage, coordinator: mockCoordinator,
+            coordinator: mockCoordinator,
             profile: testProfile)
 
         // When
@@ -100,7 +97,7 @@ class ProfileViewModelTests: XCTestCase {
     {
         // Given
         viewModel = ProfileViewModel(
-            sessionStorage: mockSessionStorage, coordinator: mockCoordinator,
+            coordinator: mockCoordinator,
             profile: nil)
 
         // When
@@ -116,7 +113,7 @@ class ProfileViewModelTests: XCTestCase {
     func testErrorMessage_DefaultValues() {
         // When
         viewModel = ProfileViewModel(
-            sessionStorage: mockSessionStorage, coordinator: mockCoordinator,
+            coordinator: mockCoordinator,
             profile: nil)
 
         // Then

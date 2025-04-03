@@ -14,16 +14,8 @@ class MockSessionStorage: SessionStorageType {
     var userID: String? {
         return storage["firebaseUserID"]
     }
-    
-    var userEmail: String? {
-        return storage["email"]
-    }
 
     func storeUserID(userID: String) {
         storage["firebaseUserID"] = userID
-    }
-
-    func storeUserEmail(email: String) {
-        storage["email"] = email
     }
 }

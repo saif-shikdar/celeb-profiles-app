@@ -14,12 +14,9 @@ class ProfileViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     var coordinator: Coordinator?
-    let sessionStorage: SessionStorage
     
-    init(sessionStorage: SessionStorage = SessionStorage(),
-         coordinator: Coordinator?,
+    init(coordinator: Coordinator?,
          profile: Profile? = nil) {
-        self.sessionStorage = sessionStorage
         self.coordinator = coordinator
         self.profile = profile
     }

@@ -13,28 +13,27 @@ struct LoginView: View {
 
     var body: some View {
         NavigationView {
-            if (viewModel.authService.isLoading) {
-                LoadingView(isLoading: true)
-            } else {
-                VStack(alignment: .center, spacing: 16) {
-                    Text("Login")
-                        .font(DesignTokens.Typography.titleFont)
-                        .foregroundStyle(DesignTokens.Colors.primary)
-                        .textCase(.uppercase)
-                        .padding(.bottom, 30)
-                    CustomTextField(placeholder: "Email", text: $viewModel.email)
-                    CustomSecureField(
-                        placeholder: "Password", text: $viewModel.password)
-                    CustomTextButton(text: "Sign In",
-                                     onButtonTapped: viewModel.signIn)
-                    .alert("Error", isPresented: $viewModel.showErrorMessage) {
-
-                    } message: {
-                        Text(viewModel.errorMessage ?? "Unknown Error")
+            VStack(alignment: .center, spacing: 16) {
+                Text("Login")
+                    .font(DesignTokens.Typography.titleFont)
+                    .foregroundStyle(DesignTokens.Colors.primary)
+                    .textCase(.uppercase)
+                    .padding(.bottom, 30)
+                Button {
+                    viewModel.signIn()
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "apple.logo")
+                            .foregroundStyle(DesignTokens.Colors.secondary)
+                        Text("Sign in with Apple")
+                            .foregroundStyle(DesignTokens.Colors.secondary)
+                            .font(DesignTokens.Typography.bodyFont)
                     }
                 }
-                .safeAreaPadding()
+                .buttonStyle(.borderedProminent)
+                .tint(DesignTokens.Colors.primary)
             }
+            .safeAreaPadding()
         }
     }
 }
