@@ -9,6 +9,7 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 import Foundation
+import FirebaseFirestore
 
 class AuthenticationService: NSObject, ObservableObject,
     ASAuthorizationControllerDelegate
@@ -16,6 +17,7 @@ class AuthenticationService: NSObject, ObservableObject,
     @Published var signedIn: Bool = false
 
     let auth = Auth.auth()
+    let db = Firestore.firestore()
     let sessionStorage = SessionStorage()
     var currentNonce: String?
 
@@ -44,41 +46,51 @@ class AuthenticationService: NSObject, ObservableObject,
         authorizationController.performRequests()
     }
 
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization) {
-            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                guard let nonce = currentNonce else {
-                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                }
-                guard let appleIDToken = appleIDCredential.identityToken else {
-                    print("Unable to fetch identity token")
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        if let appleIDCredential = authorization.credential
+            as? ASAuthorizationAppleIDCredential
+        {
+            guard let nonce = currentNonce else {
+                fatalError(
+                    "Invalid state: A login callback was received, but no login request was sent."
+                )
+            }
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("Unable to fetch identity token")
+                return
+            }
+            guard
+                let idTokenString = String(data: appleIDToken, encoding: .utf8)
+            else {
+                print(
+                    "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
+                )
+                return
+            }
+
+            // Initialize a Firebase credential.
+            let credential = OAuthProvider.credential(
+                providerID: .apple,
+                idToken: idTokenString,
+                rawNonce: nonce)
+
+            // Sign in with Firebase.
+            Auth.auth().signIn(with: credential) { (authResult, error) in
+                if error != nil {
+                    print(error?.localizedDescription ?? "Unknown Error")
                     return
                 }
-                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                    print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                    return
-                }
-                
-                // Initialize a Firebase credential.
-                let credential = OAuthProvider.credential(providerID: .apple,
-                                                          idToken: idTokenString,
-                                                          rawNonce: nonce)
-                
-                // Sign in with Firebase.
-                Auth.auth().signIn(with: credential) { (authResult, error) in
-                    if (error != nil) {
-                        print(error?.localizedDescription ?? "Unknown Error")
-                        return
-                    }
-                    // User is signed in to Firebase with Apple.
-                    // ...
-                    print("Apple sign in!")
-                    
-                    // Allow proceed to next screen
-                }
+                // User is signed in to Firebase with Apple.
+                // ...
+                print("Apple sign in!")
+
+                // Allow proceed to next screen
             }
         }
-
+    }
 
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
@@ -134,6 +146,43 @@ class AuthenticationService: NSObject, ObservableObject,
         } catch {
             print("Error signing out: \(error)")
             completion(error)
+        }
+    }
+
+    func setUserData(
+        userID: String,
+        completion: @escaping (Result<User?, Error>) -> Void
+    ) {
+        let docRef = db.collection("users").document(userID)
+
+        docRef.getDocument(as: User.self) { result in
+            switch result {
+            case .success(let user):
+                completion(.success(user))
+            case .failure(_):
+                completion(.failure(CustomError.noData))
+            }
+        }
+    }
+
+    func hasUserData(
+        userID: String,
+        completion: @escaping (Result<Bool?, Error>) -> Void
+    ) {
+        let docRef = db.collection("users").document(userID)
+
+        docRef.getDocument { (document, error) in
+            guard let document = document else {
+                completion(.failure(error ?? CustomError.noData))
+                return
+            }
+            
+            if document.exists {
+                completion(.success(true))
+            } else {
+                completion(.success(false))
+            }
+            return
         }
     }
 }

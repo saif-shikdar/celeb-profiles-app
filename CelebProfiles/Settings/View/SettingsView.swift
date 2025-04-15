@@ -17,7 +17,7 @@ struct SettingsView: View {
                 VStack {
                     Spacer()
                     ProfilePictureView(
-                        imageURL: viewModel.user?.profilePictureURL ?? "",
+                        imageURL: "",
                         forename: viewModel.user?.forename ?? "",
                         surname: viewModel.user?.surname ?? ""
                     )

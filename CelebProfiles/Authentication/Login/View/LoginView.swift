@@ -29,6 +29,7 @@ struct LoginView: View {
                             .foregroundStyle(DesignTokens.Colors.secondary)
                             .font(DesignTokens.Typography.bodyFont)
                     }
+                    .padding(5)
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(DesignTokens.Colors.primary)
